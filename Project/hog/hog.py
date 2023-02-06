@@ -112,20 +112,31 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     feral_hogs: A boolean indicating whether the feral hogs rule should be active.
     """
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
+    p0_prev_pure_score = 0
+    p1_prev_pure_score = 0
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
-    def calc_score(strategy, player_score, opponent_score):
+    def calc_score(strategy, player_score, opponent_score, player_prev_pure_score):
         num_rolls = strategy(player_score, opponent_score)
-        player_score += take_turn(num_rolls, opponent_score, dice)
+        curr_score = take_turn(num_rolls, opponent_score, dice)
+        player_score += curr_score
+
+        if feral_hogs:
+            player_score += 3 if abs(num_rolls -
+                                     player_prev_pure_score) == 2 else 0
+            player_prev_pure_score = curr_score
+
         if is_swap(player_score, opponent_score):
             player_score, opponent_score = opponent_score, player_score
-        return player_score, opponent_score
+        return player_score, opponent_score, player_prev_pure_score
 
     while score0 < goal and score1 < goal:
         if who == 0:
-            score0, score1 = calc_score(strategy0, score0, score1)
+            score0, score1, p0_prev_pure_score = calc_score(
+                strategy0, score0, score1, p0_prev_pure_score)
         else:
-            score1, score0 = calc_score(strategy1, score1, score0)
+            score1, score0, p1_prev_pure_score = calc_score(
+                strategy1, score1, score0, p1_prev_pure_score)
         who = other(who)
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
