@@ -25,9 +25,9 @@ def roll_dice(num_rolls, dice=six_sided):
     is_pig_out = False
     score = 0
     while num_rolls:
-        curr_score = dice()
-        score, num_rolls = score + curr_score, num_rolls - 1
-        if curr_score == 1:
+        this_turn_score = dice()
+        score, num_rolls = score + this_turn_score, num_rolls - 1
+        if this_turn_score == 1:
             is_pig_out = True
     return 1 if is_pig_out else score
     # END PROBLEM 1
@@ -118,13 +118,13 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     "*** YOUR CODE HERE ***"
     def calc_score(strategy, player_score, opponent_score, player_prev_pure_score):
         num_rolls = strategy(player_score, opponent_score)
-        curr_score = take_turn(num_rolls, opponent_score, dice)
-        player_score += curr_score
+        this_turn_score = take_turn(num_rolls, opponent_score, dice)
+        player_score += this_turn_score
 
         if feral_hogs:
             player_score += 3 if abs(num_rolls -
                                      player_prev_pure_score) == 2 else 0
-            player_prev_pure_score = curr_score
+            player_prev_pure_score = this_turn_score
 
         if is_swap(player_score, opponent_score):
             player_score, opponent_score = opponent_score, player_score
