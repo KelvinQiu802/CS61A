@@ -137,6 +137,7 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
         else:
             score1, score0, p1_last_pure_score = calc_score(
                 strategy1, score1, score0, p1_last_pure_score)
+        say = say(score0, score1)
         who = other(who)
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
