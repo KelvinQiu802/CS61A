@@ -71,6 +71,9 @@ def is_swap(player_score, opponent_score):
     """
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    player_ones_digit = player_score % 10
+    oppo_ones_digit, oppo_tens_digit = opponent_score % 10, opponent_score // 10 % 10
+    return abs(player_ones_digit - oppo_ones_digit) == oppo_tens_digit
     # END PROBLEM 4
 
 
