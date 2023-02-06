@@ -22,6 +22,14 @@ def roll_dice(num_rolls, dice=six_sided):
     assert num_rolls > 0, 'Must roll at least once.'
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
+    is_pig_out = False
+    score = 0
+    while num_rolls:
+        curr_score = dice()
+        score, num_rolls = score + curr_score, num_rolls - 1
+        if curr_score == 1:
+            is_pig_out = True
+    return 1 if is_pig_out else score
     # END PROBLEM 1
 
 
@@ -118,6 +126,7 @@ def say_scores(score0, score1):
     print("Player 0 now has", score0, "and Player 1 now has", score1)
     return say_scores
 
+
 def announce_lead_changes(last_leader=None):
     """Return a commentary function that announces lead changes.
 
@@ -142,6 +151,7 @@ def announce_lead_changes(last_leader=None):
             print('Player', leader, 'takes the lead by', abs(score0 - score1))
         return announce_lead_changes(leader)
     return say
+
 
 def both(f, g):
     """Return a commentary function that says what f says, then what g says.
@@ -284,7 +294,6 @@ def run_experiments():
         print('final_strategy win rate:', average_win_rate(final_strategy))
 
     "*** You may add additional experiments as you wish ***"
-
 
 
 def bacon_strategy(score, opponent_score, cutoff=8, num_rolls=6):
