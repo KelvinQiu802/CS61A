@@ -359,7 +359,8 @@ def bacon_strategy(score, opponent_score, cutoff=8, num_rolls=6):
     rolls NUM_ROLLS otherwise.
     """
     # BEGIN PROBLEM 10
-    return 6  # Replace this statement
+    bacon = 10 - opponent_score % 10 + opponent_score // 10 % 10
+    return 0 if bacon >= cutoff else num_rolls
     # END PROBLEM 10
 
 
