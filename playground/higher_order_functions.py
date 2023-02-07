@@ -30,3 +30,25 @@ def logger(f):
 logged_abs = logger(abs)
 logged_abs(1)
 logged_abs(2)
+
+print('=================')
+
+# Self Referencing Function
+
+
+def do_all(f):
+    def do_next(g):
+        if g == 'done':
+            return f
+        return do_all(compose(f, g))
+    return do_next
+
+
+def compose(f, g):
+    def composed(x):
+        return g(f(x))
+    return composed
+
+
+add_one_mul_two = do_all(lambda x: x + 1)(lambda x: x * 2)('done')
+print(add_one_mul_two(2))
